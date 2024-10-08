@@ -1,11 +1,12 @@
 package com.mike.shoppingcart.service.product;
 
 import com.mike.shoppingcart.model.Product;
+import com.mike.shoppingcart.request.AddProductRequest;
 
 import java.util.List;
 
 public interface ProductService {
-    Product addProduct(Product product);
+    Product addProduct(AddProductRequest request);
 
 
 
@@ -17,7 +18,7 @@ public interface ProductService {
     void deleteProductById(Long id);
 
 
-    void updateProduct(Product product,Long productId);
+    Product updateProduct(AddProductRequest product,Long productId);
 
     List<Product> getAllProducts();
     List<Product> getProductsByCategory(String category);
