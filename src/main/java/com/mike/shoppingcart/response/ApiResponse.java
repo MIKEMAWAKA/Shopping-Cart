@@ -1,2 +1,12 @@
-package com.mike.shoppingcart.response;public class ApiResponse {
+package com.mike.shoppingcart.response;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+public class ApiResponse {
+    private String message;
+    private  Object data;
+
 }

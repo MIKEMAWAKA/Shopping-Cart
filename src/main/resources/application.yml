@@ -24,7 +24,17 @@ spring:
         driver-class-name: com.mysql.cj.jdbc.Driver
         url: jdbc:mysql://localhost:3306/shopcart
         username: root
-        password: 
+        password:
+
+
+
+api:
+ prefix: "/api/v1/"
+
+
+
+
+
 #---
 #spring:
 #    profiles: qa

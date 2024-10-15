@@ -1,2 +1,12 @@
-package com.mike.shoppingcart.controller;public class ProductController {
+package com.mike.shoppingcart.controller;
+
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("${api.prefix}/products")
+public class ProductController
+
+{
 }
