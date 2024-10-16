@@ -90,4 +90,19 @@ public class CategoryController {
                     .body(new ApiResponse(e.getMessage(),null));
         }
     }
+
+    @DeleteMapping("/category{id}/update")
+    public  ResponseEntity<ApiResponse> deleteCategory(@PathVariable  Long id, @RequestBody Category category){
+
+
+        try {
+            Category thecategory =  categoryService.updateCategory(category,id);
+
+            return  ResponseEntity.ok(new ApiResponse("Successfully",thecategory));
+
+        } catch (ResourceNotFoundException e){
+            return  ResponseEntity.status(NOT_FOUND)
+                    .body(new ApiResponse(e.getMessage(),null));
+        }
+    }
 }
