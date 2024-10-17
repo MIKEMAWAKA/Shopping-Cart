@@ -132,6 +132,7 @@ public class ProductServiceimpl implements ProductService {
 
     @Override
     public List<Product> getProductsByBrandAndName( String brand,String name) {
+
         return productRepository.findByBrandAndName(brand,name);
     }
 
