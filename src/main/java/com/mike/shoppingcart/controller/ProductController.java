@@ -1,6 +1,7 @@
 package com.mike.shoppingcart.controller;
 
 
+import com.mike.shoppingcart.dto.ProductDto;
 import com.mike.shoppingcart.exceptions.ResourceNotFoundException;
 import com.mike.shoppingcart.model.Product;
 import com.mike.shoppingcart.request.AddProductRequest;
@@ -27,12 +28,14 @@ public class ProductController
         try {
             List<Product> products = productService.getAllProducts();
 
-            return ResponseEntity.ok(new ApiResponse("Found",products));
+            List<ProductDto> convertedProducts = productService.getConvertedProduct(products);
+
+            return ResponseEntity.ok(new ApiResponse("Found",convertedProducts));
 
 
         } catch (Exception e){
             return  ResponseEntity.status(INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse("Error: ",INTERNAL_SERVER_ERROR));
+                    .body(new ApiResponse("Error: ",e.getMessage()));
         }
 
 
@@ -58,7 +61,7 @@ public class ProductController
     }
 
 
-    @PutMapping("/product{id}/update")
+    @PutMapping("/product/{id}/update")
     public  ResponseEntity<ApiResponse> productUpdate(@PathVariable  Long id, @RequestBody AddProductRequest request){
 
 
@@ -74,14 +77,16 @@ public class ProductController
     }
 
 
-    @GetMapping("/product{id}/product")
+    @GetMapping("/product/{id}/product")
     public  ResponseEntity<ApiResponse> getProductById(@PathVariable  Long id){
 
 
         try {
             Product product = productService.getProductById(id);
 
-            return  ResponseEntity.ok(new ApiResponse("Successfully",product));
+           var convertedProducts = productService.convertoDto(product);
+
+            return  ResponseEntity.ok(new ApiResponse("Successfully",convertedProducts));
 
         } catch (ResourceNotFoundException e){
             return  ResponseEntity.status(NOT_FOUND)
@@ -90,7 +95,7 @@ public class ProductController
     }
 
 
-    @DeleteMapping("/product{id}/delete")
+    @DeleteMapping("/product/{id}/delete")
     public  ResponseEntity<ApiResponse> deleteProduct(@PathVariable  Long id){
 
 
@@ -117,7 +122,8 @@ public class ProductController
                         .body(new ApiResponse("No product found with name: "+name,null));
             }
 
-            return  ResponseEntity.ok(new ApiResponse("Successfully",products));
+            List<ProductDto> convertedProducts = productService.getConvertedProduct(products);
+            return  ResponseEntity.ok(new ApiResponse("Successfully",convertedProducts));
 
         } catch (Exception e){
             return  ResponseEntity.status(NOT_FOUND)
@@ -135,8 +141,9 @@ public class ProductController
                 return  ResponseEntity.status(NOT_FOUND)
                         .body(new ApiResponse("No product found with name: "+name,null));
             }
-
-            return  ResponseEntity.ok(new ApiResponse("Successfully",products));
+            List<ProductDto> convertedProducts = productService.getConvertedProduct(products);
+            return  ResponseEntity.ok(new ApiResponse("Successfully",convertedProducts));
+//            return  ResponseEntity.ok(new ApiResponse("Successfully",products));
 
         } catch (Exception e){
             return  ResponseEntity.status(NOT_FOUND)
@@ -154,7 +161,9 @@ public class ProductController
                 return  ResponseEntity.status(NOT_FOUND)
                         .body(new ApiResponse("No product found with brand: "+brandName,null));
             }
-            return  ResponseEntity.ok(new ApiResponse("Successfully",products));
+            List<ProductDto> convertedProducts = productService.getConvertedProduct(products);
+            return  ResponseEntity.ok(new ApiResponse("Successfully",convertedProducts));
+//            return  ResponseEntity.ok(new ApiResponse("Successfully",products));
 
         } catch (Exception e){
             return  ResponseEntity.status(NOT_FOUND)
@@ -172,7 +181,9 @@ public class ProductController
                 return  ResponseEntity.status(NOT_FOUND)
                         .body(new ApiResponse("No product found with Category: "+category,null));
             }
-            return  ResponseEntity.ok(new ApiResponse("Successfully",products));
+            List<ProductDto> convertedProducts = productService.getConvertedProduct(products);
+            return  ResponseEntity.ok(new ApiResponse("Successfully",convertedProducts));
+           // return  ResponseEntity.ok(new ApiResponse("Successfully",products));
 
         } catch (Exception e){
             return  ResponseEntity.status(NOT_FOUND)

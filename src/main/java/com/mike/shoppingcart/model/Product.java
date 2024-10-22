@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Random;
 
 @Getter
 @Setter
@@ -28,6 +29,11 @@ public class Product {
 
     private  String description;
 
+    @Column(unique = true, length = 10)
+    private String productCode;
+
+
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private  Category category;
@@ -43,5 +49,16 @@ public class Product {
         this.inventory = inventory;
         this.description = description;
         this.category = category;
+        this.productCode = generateUniqueProductCode();
+    }
+
+//    public Product() {
+//
+//    }
+
+    // Method to generate a product code starting with "P" followed by 9 digits
+    private String generateUniqueProductCode() {
+        Random random = new Random();
+        return "P" + String.format("%09d", random.nextInt(1_000_000_000));
     }
 }

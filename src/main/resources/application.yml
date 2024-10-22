@@ -27,6 +27,12 @@ spring:
         password:
 
 
+    servlet:
+        multipart:
+            max-file-size: 5MB  # Maximum size for uploaded files
+            max-request-size: 5MB
+
+
 
 api:
     prefix: "/api/v1"
