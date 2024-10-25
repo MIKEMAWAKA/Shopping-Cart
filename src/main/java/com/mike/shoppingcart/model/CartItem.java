@@ -3,12 +3,14 @@ package com.mike.shoppingcart.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 
 @Setter
+@Getter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
