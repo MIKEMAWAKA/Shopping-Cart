@@ -22,8 +22,9 @@ public class CartServiceImpl implements CartService {
     private CartItemRepository cartItemRepository;
 
 
-    @Autowired
-    private  AtomicLong cartIdGenerator = new AtomicLong(0);
+
+
+    private final AtomicLong cartIdGenerator = new AtomicLong(0);
 
 
     @Override

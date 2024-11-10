@@ -8,9 +8,11 @@ import com.mike.shoppingcart.reposistory.CartItemRepository;
 import com.mike.shoppingcart.reposistory.CartRepository;
 import com.mike.shoppingcart.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
+@Service
 public class CartItemServiceImp implements CartItemService{
 
     @Autowired
