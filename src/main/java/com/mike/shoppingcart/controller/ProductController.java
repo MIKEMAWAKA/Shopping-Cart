@@ -53,7 +53,7 @@ public class ProductController
 
 
         } catch (Exception e){
-            return  ResponseEntity.status(INTERNAL_SERVER_ERROR)
+            return  ResponseEntity.status(CONFLICT)
                     .body(new ApiResponse(e.getMessage(),null));
         }
 

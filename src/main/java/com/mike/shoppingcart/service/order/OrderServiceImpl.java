@@ -1,8 +1,10 @@
 package com.mike.shoppingcart.service.order;
 
 
+import com.mike.shoppingcart.dto.OrderDto;
 import com.mike.shoppingcart.enums.OrderStatus;
 import com.mike.shoppingcart.exceptions.ProductNotFoundException;
+import com.mike.shoppingcart.exceptions.ResourceNotFoundException;
 import com.mike.shoppingcart.model.Cart;
 import com.mike.shoppingcart.model.Order;
 import com.mike.shoppingcart.model.OrderItem;
@@ -10,6 +12,7 @@ import com.mike.shoppingcart.model.Product;
 import com.mike.shoppingcart.reposistory.OrderRepository;
 import com.mike.shoppingcart.reposistory.ProductRepository;
 import com.mike.shoppingcart.service.cart.CartService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +34,11 @@ public class OrderServiceImpl implements OrderService{
 
     @Autowired
     private CartService cartService;
+
+
+
+    @Autowired
+    private ModelMapper modelMapper;
 
 
 
@@ -88,13 +96,10 @@ public class OrderServiceImpl implements OrderService{
 
 
     @Override
-    public Order getOrder(Long orderId) {
-        return orderRepository.findById(orderId).
-                orElseThrow(()->{
-                    throw new ProductNotFoundException("Product not found!");
-                }
-                );
-
+    public OrderDto getOrder(Long orderId) {
+        return orderRepository.findById(orderId)
+                .map(this :: convertToDto)
+                .orElseThrow(() -> new ResourceNotFoundException("Order not found"));
     }
 
 
@@ -110,12 +115,14 @@ public class OrderServiceImpl implements OrderService{
     }
 
 
-    @Override
-    public  List<Order> getUserOrders(Long userId){
-       List<Order> orders = orderRepository.findByUserId(userId);
+    public List<OrderDto> getUserOrders(Long userId) {
+        List<Order> orders = orderRepository.findByUserId(userId);
+        return  orders.stream().map(this :: convertToDto).toList();
+    }
 
-       return  orders;
 
+    private OrderDto convertToDto(Order order) {
+        return modelMapper.map(order, OrderDto.class);
     }
 
 }
